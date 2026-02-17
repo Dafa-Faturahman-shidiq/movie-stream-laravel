@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+use Illuminate\Support\Facades\Log;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -16,10 +17,24 @@ class CheckMembership
     public function handle(Request $request, Closure $next): Response
     {
 
-    if(request()->membership !== true) {
-        return redirect('/pricing');
-    }
+        if(request()->membership !== true) {
+            return redirect('/pricing');
+        }
 
-        return $next($request);
+        Log::info('Before Request', [
+            'url' => request()->url(),
+            'param' => request()->method(),
+        ]);
+
+        $respone = $next($request);
+
+        sleep(2);
+
+        Log::info('After Request', [
+            'status' => $respone->getStatusCode(),
+            'content' => request()->getContent(),
+        ]);
+
+        return $respone;
     }
 }

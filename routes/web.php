@@ -27,8 +27,8 @@ $movies = [
 
 Route::get('/movies/{id}', function ($id) use ($movies) {
     return $movies[$id];
-})->middleware(CheckMembership::class);
+})->middleware('isMember');
 
 Route::get('/pricing', function () {
-    return 'BELI MEMBERSHIP DULU BOSKU';
+    return 'BELI MEMBERSHIP DULU WOOO!!! ';
 });
