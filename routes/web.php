@@ -2,43 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckMembership;
+use App\Http\Controllers\MovieController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-$movies = [
-    [
-        'title' => 'One piece Film Red',
-        'director' => 'Gorō Taniguchi',
-        'year' => 2022,
-    ],
-    [
-        'title' => 'Your Name',
-        'director' => 'Makoto Shinkai',
-        'year' => 2016,
-    ],
-    [
-        'title' => 'kimetsu no yaiba: mugen train',
-        'director' => 'Yuki Kajiura',
-        'year' => 2020,
-    ],
-];
 
 Route::group(
     [
     'prefix'=> 'movie',
     'middleware'=> ['isAuth'],
     ],
-    function () use ($movies) {
+    function ()  {
 
-    Route::get('/', function () use ($movies) {
-        return $movies;
-    });
+    Route::get('/', [MovieController::class,'index']);
 
-    Route::get('/{id}', function ($id) use ($movies) {
-        return $movies[$id];
-    })->middleware(['isMember']);
+    // Route::get('/{id}', function ($id) use ($movies) {
+    //     return $movies[$id];
+    // })->middleware(['isMember']);
 
 });
 
