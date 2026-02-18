@@ -25,9 +25,24 @@ $movies = [
     ],
 ];
 
-Route::get('/movies/{id}', function ($id) use ($movies) {
-    return $movies[$id];
-})->middleware(['isAuth', 'isMember']);
+Route::group(
+    [
+    'prefix'=> 'movie',
+    'middleware'=> ['isAuth'],
+    ],
+    function () use ($movies) {
+
+    Route::get('/', function () use ($movies) {
+        return $movies;
+    });
+
+    Route::get('/{id}', function ($id) use ($movies) {
+        return $movies[$id];
+    })->middleware(['isMember']);
+
+});
+
+
 
 Route::get('/pricing', function () {
     return 'BELI MEMBERSHIP DULU WOOO!!! ';
