@@ -27,8 +27,12 @@ $movies = [
 
 Route::get('/movies/{id}', function ($id) use ($movies) {
     return $movies[$id];
-})->middleware('isMember');
+})->middleware(['isAuth', 'isMember']);
 
 Route::get('/pricing', function () {
     return 'BELI MEMBERSHIP DULU WOOO!!! ';
 });
+
+Route::get('/Login', function () {
+    return 'Login dulu wooo!!! ';
+})->name('login');
